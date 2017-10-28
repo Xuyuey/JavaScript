@@ -1,0 +1,73 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+body{ font-size: 12px; }
+li{ list-style: none; }
+#container{
+	width: 800px;
+	margin: 0 auto;
+	padding: 20px;
+}
+#container h1{
+	color: #0088bb;
+}
+.item{
+	padding: 25px;
+	margin-bottom: 20px;
+	border: 2px dotted gray
+}
+.item h2{
+	font-size: 16px;
+	font-weight: bold;
+	color: gray;
+	border-bottom: 2px solid pink;
+	margin-bottom: 20px;
+}
+.item li{
+	display: inline-block;
+	padding: 10px;
+}
+.item li a img{
+	width: 223px;
+	height: 223px;
+}
+#menu{
+	position: fixed;
+	/* bottom: 200px;
+	right:20px; */
+	top: 350px;
+	left: 50%;
+	margin-left: 410px;
+}
+#menu ul li a{
+	display: block;
+	height: 35px;
+	width: 35px;
+	line-height: 35px;
+	font-size: 24px;
+	color: gray;
+	text-align: center;
+	border: 2px solid #ccc;
+	margin-top: 3px;
+	text-decoration: none;
+}
+
+#menu ul li a.current{
+	color: #FFF;
+	background: pink;
+	border: 2px solid pink;
+	transform: background 0.5s;
+}
+
+/*hack*/
+*html, *html body{
+	background-image: url(about:blank);
+	background-attachment: fixed;
+}
+
+*html #menu{
+	/* position: fixed; */
+	position: absolute;
+	top: expression(((e = document.documentElement.scrollTop)?e:document.body.scrollTop)+250+"px");
+}
