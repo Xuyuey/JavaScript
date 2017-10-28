@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计时</title>
+<script type="text/javascript">
+window.onload = function(){
+	jishi();
+}
+function jishi(){
+	var cur = new Date();
+	var end = new Date('2017/4/7,15:54:00');
+	//parseInt取整数的
+	var lefttime =parseInt((end.getTime()- cur.getTime())/1000);
+	var d = parseInt(lefttime/(24*60*60));
+	var h = parseInt(lefttime/(60*60)%24);
+	var m = parseInt(lefttime/60%60);
+	var s = parseInt(lefttime%60);
+
+	if(lefttime<=0){
+		document.getElementById('timeshow').innerHTML = '团购结束';
+	}else{
+		document.getElementById('timeshow').innerHTML = d+':'+h+':'+m+':'+s;
+	}
+	setTimeout(jishi,500);
+}
+</script>
+</head>
+<body>
+	<div class="con">
+	<div class="txtshow"><span id="timeshow"></span></div>
+	</div>
+</body>
+</html>

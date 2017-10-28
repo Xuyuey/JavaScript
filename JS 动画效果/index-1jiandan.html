@@ -1,0 +1,139 @@
+<!-- 遇到速度这类的问题一定要记得向上取整或者向下取整 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>简单动画</title>
+<style type="text/css">
+body {
+	padding: 0px;
+	margin: 0px;
+}
+#div1 {
+	width: 200px;
+	height: 200px;
+	background: red;
+	position: relative;
+	left: -200px;
+	top: 0px;
+}
+#div1 span {
+	width: 20px;
+	height: 50px;
+	background: blue;
+	position: absolute;
+	left: 200px;
+	top: 75px;
+}
+#div2 {
+	width: 200px;
+	height: 200px;
+	background: red;
+	filter: alpha(opacity:30);
+	opacity: 0.3;
+}
+</style>
+<script type="text/javascript">
+window.onload = function(){
+	var oDiv = document.getElementById('div1');
+	oDiv.onmouseover = function(){
+		startMove(0);
+	}
+	oDiv.onmouseout = function(){
+		startMove(-200);
+	}
+
+	var oDiv2 = document.getElementById('div2');
+	oDiv2.onmouseover = function(){
+		startColor(100);
+	}
+	oDiv2.onmouseout = function(){
+		startColor(30);
+	}
+}
+var timer =null;
+var alpha = 30;
+function startMove(iTarget){
+	clearInterval(timer);
+	var oDiv = document.getElementById('div1');
+	timer =  setInterval(function(){
+		var speed = (iTarget-oDiv.offsetLeft)/10;
+		speed = speed>0?Math.ceil(speed):Math.floor(speed);
+		/*if(oDiv.offsetLeft > iTarget){
+			speed = -10;
+		}else{
+			speed = 10;
+		}*/
+		if(oDiv.offsetLeft==iTarget){
+			clearInterval(timer);
+		}else{
+			oDiv.style.left = oDiv.offsetLeft+speed+'px';
+		}
+	},30);
+}
+
+function startColor(iTarget){
+	clearInterval(timer);
+	var oDiv2 = document.getElementById('div2');
+	timer = setInterval(function(){
+		var speed = 0;
+		if (alpha >iTarget){
+			speed = -10;
+		}else {
+			speed = 10;
+		}
+		if (alpha == iTarget){
+			clearInterval(timer);
+		}else{
+			alpha += speed;
+			oDiv2.style.filter = 'alpha(opacity:'+alpha+')';
+			oDiv2.style.opacity = alpha/100;
+		}
+	},30)
+}
+
+/*两个参数需要精简
+function startMove(speed,iTarget){
+	clearInterval(timer);
+	var oDiv = document.getElementById('div1');
+	timer =  setInterval(function(){
+		if(oDiv.offsetLeft==iTarget){
+			clearInterval(timer);
+		}else{
+			oDiv.style.left = oDiv.offsetLeft+speed+'px';
+		}
+	},30);
+}*/
+
+/*无参数
+function startMove(){
+	clearInterval(timer);
+	var oDiv = document.getElementById('div1');
+	timer =  setInterval(function(){
+		if(oDiv.offsetLeft==0){
+			clearInterval(timer);
+		}else{
+			oDiv.style.left = oDiv.offsetLeft+10+'px';
+		}
+	},30);
+}
+function stopMove(){
+	clearInterval(timer);
+	var oDiv = document.getElementById('div1');
+	timer =  setInterval(function(){
+		if(oDiv.offsetLeft==-200){
+			clearInterval(timer);
+		}else{
+			oDiv.style.left = oDiv.offsetLeft-10+'px';
+		}
+	},30);
+}*/
+</script>
+</head>
+<body>
+	<div id="div1">
+		<span id="share">分享</span>
+	</div>	
+	<div id="div2"></div>
+</body>
+</html>

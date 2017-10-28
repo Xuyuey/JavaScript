@@ -1,0 +1,152 @@
+<!-- 封装了一个任意值，一个透明度 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getStyle</title>
+<style type="text/css">
+body{
+	padding: 0px;
+	margin: 0px;
+}
+ul,li{
+	padding: 0px;
+	list-style: none;
+}
+ul li{
+	width: 200px;
+	height: 100px;
+	background: yellow;
+	margin-bottom: 20px;
+	border: 4px solid #000;
+	font-size: 12px;
+}
+#li3{
+	filter: alpha(opacity:30);
+	opacity: 0.3;
+}
+div {
+	width: 200px;
+	height: 200px;
+	background: red;
+	margin-right: 20px;
+	float: left;
+	filter: alpha(opacity:30);
+	opacity: 0.3;
+}
+</style>
+<script type="text/javascript">
+window.onload = function(){
+	/*var aLi = document.getElementsByTagName('li');
+	for(var i=0; i <aLi.length; i++){
+		aLi[i].timer = null;
+		aLi[i].onmouseover = function(){
+			startMove(this,400);
+		}
+		aLi[i].onmouseout = function(){
+			startMove(this,200);
+		}
+	}*/
+
+	var aLi1 = document.getElementById('li1');
+	var aLi2 = document.getElementById('li2');
+	var aLi3 = document.getElementById('li3');
+	aLi1.onmouseover = function(){
+		startMove(this,'height',300);
+	}
+	aLi1.onmouseout = function(){
+		startMove(this,'height',100);
+	}
+	aLi2.onmouseover = function(){
+		startMove(this,'width',400);
+	}
+	aLi2.onmouseout = function(){
+		startMove(this,'width',200);
+	}
+	aLi3.onmouseover = function(){
+		startMove(this,'opacity',100);
+	}
+	aLi3.onmouseout = function(){
+		startMove(this,'opacity',30);
+	}
+
+
+	var oDiv = document.getElementsByTagName('div');
+	for(var i=0; i <oDiv.length; i++){
+		oDiv[i].timer = null;
+		oDiv[i].alpha = 30;
+		oDiv[i].onmouseover = function(){
+			startColor(this,100);
+		}
+		oDiv[i].onmouseout = function(){
+			startColor(this,30);
+		}
+	}
+}
+/*var timer = null;*/
+
+function startMove(obj,attr,iTarget){
+	clearInterval(obj.timer);
+	obj.timer = setInterval(function(){
+		var icur = 0;
+		if( attr == 'opacity'){
+			icur = Math.round(parseFloat(getStyle(obj,attr))*100);
+		}else {
+			icur = parseInt(getStyle(obj,attr));
+		}
+		var speed = (iTarget-icur)/8;
+		speed = speed>0?Math.ceil(speed):Math.floor(speed);
+		if(icur == iTarget){
+			clearInterval(obj.timer);
+		}else{
+			/*obj.style[attr] = icur + speed + 'px';*/
+			if(attr=='opacity'){
+				obj.style.filter = 'alpha(opacity:'+(icur+speed)+')';//针对IE
+				obj.style.opacity = (icur+speed)/100;//针对火狐和chrome
+			}else{
+				obj.style[attr] = icur+speed+'px';
+			}
+		}
+	},30);
+}
+
+/*var alpha = 30;*/
+function startColor(obj,iTarget){
+	clearInterval(obj.timer);
+	obj.timer = setInterval(function(){
+		var speed = 0;
+		if (obj.alpha >iTarget){
+			speed = -10;
+		}else {
+			speed = 10;
+		}
+		if (obj.alpha == iTarget){
+			clearInterval(obj.timer);
+		}else{
+			obj.alpha += speed;
+			obj.style.filter = 'alpha(opacity:'+obj.alpha+')';
+			obj.style.opacity = obj.alpha/100;
+		}
+	},30)
+}
+
+function getStyle(obj,attr){
+	if (obj.currentStyle){
+		return obj.currentStyle[attr];
+	}else {
+		return getComputedStyle(obj,false)[attr];
+	}
+}
+</script>
+</head>
+<body>
+<ul>
+	<li id="li1"></li>
+	<li id="li2"></li>
+	<li id="li3">nihao</li>
+</ul>
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+</body>
+</html>

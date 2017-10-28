@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>链式动画</title>
+<style type="text/css">
+body,ul{
+	margin: 0px;
+	padding: 0px;
+}
+ul,li{
+	list-style: none;
+}
+#li{
+	width: 200px;
+	height: 100px;
+	background: yellow;
+	margin-bottom: 20px;
+	border: 4px solid #000;
+    filter: alpha(opacity:30);
+	opacity: 0.3;
+}
+</style>
+<script src="js\move.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	var aLi = document.getElementById('li');
+	aLi.onmouseover = function(){
+		startMove(this,'width',400,function(){
+			startMove(aLi,'height',200,function(){
+				startMove(aLi,'opacity',100);
+			});
+		});
+	}
+	aLi.onmouseout = function(){
+		startMove(this,'opacity',30,function(){
+			startMove(aLi,'height',100,function(){
+				startMove(aLi,'width',200);
+			});
+		});
+	}
+}
+</script>
+</head>
+<body>
+<ul>
+	<li id="li"></li>
+</ul>
+</body>
+</html>
